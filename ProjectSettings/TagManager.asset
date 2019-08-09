@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ast
   - Bullet
+  - BouncyBall
+  - Hoop
   layers:
   - Default
   - TransparentFX
