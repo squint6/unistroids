@@ -6,6 +6,9 @@ public class AstSource : MonoBehaviour
 {
     public float period = 4.0F;
     public Ast astPf;
+	
+	public GameObject[] contents;
+	private int nextContentIndex = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +21,12 @@ public class AstSource : MonoBehaviour
     {
         Debug.Log("In CreateAst");
         Ast ast = Instantiate(astPf, transform.position, Quaternion.identity);
+		if (nextContentIndex < contents.Length && Random.value > 0.5) {
+			ast.contents = contents[nextContentIndex];
+			nextContentIndex++;
+		}
         ast.Init(AstSize.Large, transform.position, Ast.RandVel());
+		
        
     }
 

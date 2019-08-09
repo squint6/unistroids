@@ -7,7 +7,7 @@ public enum AstSize { Large, Medium, Small};
 public class Ast : MonoBehaviour
 {
 
-    public static float explosionVelocity = 1.0F;
+    public static float explosionVelocity = 3.0F;
     public AstSize size = AstSize.Large;
 
     private Vector3 LargeScale = new Vector3(1.0F, 1.0F, 1.0F);
@@ -15,6 +15,8 @@ public class Ast : MonoBehaviour
     private Vector3 SmallScale = new Vector3(.5F, .5F, .5F);
 
     private Rigidbody2D rigidBody;
+	
+	public GameObject contents;
 
     private Vector3 sizeScale(AstSize size)
     {
@@ -45,7 +47,7 @@ public class Ast : MonoBehaviour
     }
 
 
-    private void createChildAst(AstSize size)
+    private Ast createChildAst(AstSize size, GameObject contents)
     {
         Debug.Log("Creating new ast");
         Vector3 pos = transform.position;
@@ -54,8 +56,8 @@ public class Ast : MonoBehaviour
         Vector3 rv = RandVel();
          a.Init(size, pos + LargeScale * 0.0F, vel + rv);
         a.gameObject.tag = "Ast";
-        //Rigidbody2D rb = a.GetComponent<Rigidbody2D>();
-       // rb.velocity = vel + RandVel();
+		a.contents = contents;
+		return a;
 
     }
 
@@ -64,23 +66,24 @@ public class Ast : MonoBehaviour
         switch (size)
         {
             case AstSize.Large:
-                createChildAst(AstSize.Medium);
-                createChildAst(AstSize.Medium);
+                createChildAst(AstSize.Medium, null);
+                createChildAst(AstSize.Medium, this.contents);
                 Destroy(gameObject);
-                //this.size = AstSize.Medium;
-                //transform.localScale = sizeScale(this.size);
-               // rigidBody.velocity = rigidBody.velocity + RandVel();
                 break;
             case AstSize.Medium:
-                createChildAst(AstSize.Small);
-                createChildAst(AstSize.Small);
+                createChildAst(AstSize.Small, null);
+                Ast a = createChildAst(AstSize.Small, this.contents);
                 Destroy(gameObject);
-                //this.size = AstSize.Small;
-                //transform.localScale = sizeScale(this.size);
                 break;
             case AstSize.Small:
-                Destroy(gameObject);
-                break;
+			if (this.contents) {
+			    this.contents.transform.position = transform.position;
+				Rigidbody2D rb = GetComponent<Rigidbody2D>();
+				Rigidbody2D contRb = contents.GetComponent<Rigidbody2D>();
+				contRb.velocity = rb.velocity;
+			}
+            Destroy(gameObject);
+            break;
         }
     }
 
