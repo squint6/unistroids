@@ -8,24 +8,24 @@ public class AstTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
- 
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-         if (other.gameObject.tag == "Ast")
+        if (other.gameObject.tag == "Ast" || other.gameObject.tag == "OctaWall")
         {
             Debug.Log("Not handling trigger!");
             return;
         }
         Ast a = gameObject.GetComponentInParent<Ast>();
-        
+
         a.Collision();
     }
 }

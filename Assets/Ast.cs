@@ -15,11 +15,10 @@ public class Ast : MonoBehaviour
     private Vector3 SmallScale = new Vector3(.5F, .5F, .5F);
 
     private Rigidbody2D rigidBody;
-	
-	public GameObject contents;
 
-    private Vector3 sizeScale(AstSize size)
-    {
+  public GameObject contents;
+
+    private Vector3 sizeScale(AstSize size) {
         switch (size) {
             case AstSize.Large:
                 return LargeScale;
@@ -32,8 +31,7 @@ public class Ast : MonoBehaviour
         }
     }
 
-    public void Init(AstSize size, Vector3 position, Vector3 velocity)
-    {
+    public void Init(AstSize size, Vector3 position, Vector3 velocity) {
         this.size = size;
         transform.position = position;
         transform.localScale = sizeScale(size);
@@ -41,28 +39,23 @@ public class Ast : MonoBehaviour
         rigidBody.velocity = velocity;
     }
 
-    public static Vector3 RandVel()
-    {
+    public static Vector3 RandVel() {
         return new Vector3(Random.value * explosionVelocity - explosionVelocity/2.0F, Random.value * explosionVelocity - explosionVelocity/2.0F, 0);
     }
 
 
-    private Ast createChildAst(AstSize size, GameObject contents)
-    {
-        Debug.Log("Creating new ast");
+    private Ast createChildAst(AstSize size, GameObject contents) {
         Vector3 pos = transform.position;
         Vector3 vel = GetComponent<Rigidbody2D>().velocity;
         Ast a = Instantiate(this, pos, Quaternion.identity);
         Vector3 rv = RandVel();
-         a.Init(size, pos + LargeScale * 0.0F, vel + rv);
+        a.Init(size, pos + LargeScale * 0.0F, vel + rv);
         a.gameObject.tag = "Ast";
-		a.contents = contents;
-		return a;
-
+        a.contents = contents;
+        return a;
     }
 
-    public void Collision()
-    {
+    public void Collision() {
         switch (size)
         {
             case AstSize.Large:
@@ -76,24 +69,19 @@ public class Ast : MonoBehaviour
                 Destroy(gameObject);
                 break;
             case AstSize.Small:
-			if (this.contents) {
-			    this.contents.transform.position = transform.position;
-				Rigidbody2D rb = GetComponent<Rigidbody2D>();
-				Rigidbody2D contRb = contents.GetComponent<Rigidbody2D>();
-				contRb.velocity = rb.velocity;
-			}
-            Destroy(gameObject);
-            break;
+                if (this.contents) {
+                    this.contents.transform.position = transform.position;
+                    Rigidbody2D rb = GetComponent<Rigidbody2D>();
+                    Rigidbody2D contRb = contents.GetComponent<Rigidbody2D>();
+                    contRb.velocity = rb.velocity;
+                }
+                Destroy(gameObject);
+                break;
         }
     }
 
-    void Start()
-    {
+    void Start() {
         rigidBody = GetComponent<Rigidbody2D>();
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

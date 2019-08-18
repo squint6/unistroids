@@ -8,6 +8,8 @@ TagManager:
   - Bullet
   - BouncyBall
   - Hoop
+  - OctaWall
+  - OctaShield
   layers:
   - Default
   - TransparentFX
@@ -19,11 +21,11 @@ TagManager:
   - 
   - Bullet-trigger
   - Bullet-physics
-  - Explodable-trigger
-  - Explodable-physics
+  - Ast-trigger
+  - Ast-physics
   - Walls
-  - 
-  - 
+  - Ship-trigger
+  - Ship-physics
   - 
   - 
   - 
