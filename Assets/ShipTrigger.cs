@@ -18,6 +18,8 @@ public class ShipTrigger : MonoBehaviour
             Debug.Log("Hit octa shield. Docking!");
             Ship s = gameObject.GetComponentInParent<Ship>();
             s.ParkInShield(other.gameObject.GetComponentInParent<OctaShield>());
+        } else if (other.gameObject.tag == "PortalTrigger") {
+
         } else {
             Destroy(transform.parent.gameObject);
         }

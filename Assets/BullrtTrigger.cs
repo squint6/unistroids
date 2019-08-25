@@ -18,7 +18,7 @@ public class BullrtTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!(other.gameObject.tag == "OctaShield")) {
+        if (!(other.gameObject.tag == "OctaShield" || other.gameObject.tag == "PortalTrigger")) {
             Destroy(transform.parent.gameObject);
         }
 

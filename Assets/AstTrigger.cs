@@ -17,9 +17,8 @@ public class AstTrigger : MonoBehaviour
 
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Ast" || other.gameObject.tag == "OctaWall")
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag == "Ast" || other.gameObject.tag == "OctaWall" || other.gameObject.tag == "PortalTrigger")
         {
             Debug.Log("Not handling trigger!");
             return;
